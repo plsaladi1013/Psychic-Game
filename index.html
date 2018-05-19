@@ -1,0 +1,94 @@
+ <!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Page Title</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+    <!--<link rel="stylesheet" type="text/css" media="screen" href="main.css" />
+    <script src=".\assets\javascript\game.js"></script>-->
+</head>
+<body>
+    <!--Header-->
+    <div class="container">
+        <div class="row">
+            <div class="col-12">
+                <h1 style="text-align: center">The Psychic Game</h1>
+            </div>
+        </div>
+    </div>
+    <!--Get user guess-->
+    <div class="container">
+        <div class="row">
+                <p>Guess what letter i'm thinking of:<span id="userTyped"></span></p>
+        </div>
+        <div class="row">
+                <span id="game">
+                    <p>Wins:</p>
+                    <p>Losses:</p>
+                    <p>Guesses Left:</p>
+                    <p>Your Guesses so far:</p>
+                </span>
+        </div>
+     </div>       
+    <script>
+           //Declare variables 
+           var userGuess = document.getElementById("userTyped");
+           var chars = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXTZabcdefghiklmnopqrstuvwxyz";       
+           var wins=0;
+           var losses=0;
+           var guessleft = 9;
+           var userGuesses=[];
+           var randomGuesses=[];
+           //play for 9 guesses                  
+            for(var j=0; j<9; j++ ){
+                document.onkeypress = function(event){
+                userGuess.textContent = event.key; 
+                    var x = event.keyCode; 
+                    var y = String.fromCharCode(x);  
+                    var randomGuess = chars[Math.floor(Math.random()*chars.length)]; 
+                    console.log( "x:"+x+ "y:" +y+"userGuess:"+userGuess+"userGuesses: "+userGuesses);
+                //if user guess is char or num
+                if(userGuess.testContent!=y){}
+
+                if (((x >= 65 && x <= 90)||(x >= 97 && x <= 122)||(x >= 48 && x <= 57))&&(guessleft!=0)){
+                    userGuesses.push(y);
+                    console.log("randomguess:"+randomGuess); 
+                    console.log("user guesses:"+userGuesses);
+                    randomGuesses.push(randomGuess);
+                    console.log("Random guesses:"+randomGuesses);
+                        if(y==randomGuess){
+                                wins++;
+                                guessleft--;
+                            }
+                            else {
+                                losses++;
+                                guessleft--;
+                            }
+                            console.log("losses:"+losses+"guess:"+guessleft);
+                            console.log("wins:"+wins+"guess:"+guessleft);
+                    var html =
+                         "<p>Wins:" +wins+ "</p>" +
+		                 "<p>Losses:" +losses+"</p>" +
+		                 "<p>Guesses Left:" +guessleft+ "</p>" +
+                         "<p>Your Guesses so far:" +userGuesses+ "</p>";
+                         // Set the inner HTML contents of the #game div to html string
+                         document.querySelector("#game").innerHTML = html;   
+                }
+                else if(guessleft==0){
+                        alert("Game over!")
+                        confirm("Play again?")
+                        wins =0;
+                        losses =0;
+                        guessleft=9;
+                        userGuesses =[];
+                    }
+                else {
+                        alert("Enter alphabets or letters");
+                    }
+                    }   
+           } 
+    </script>
+    </body>
+</html>
